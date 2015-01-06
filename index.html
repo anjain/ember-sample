@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ember Project</title>
+	<link rel="stylesheet" href="public/css/normalize.css">
+	<link rel="stylesheet" href="public/css/style.css">
+	<link rel="stylesheet" href="public/css/bootstrap.min.css">
+</head>
+<body>
+	<script type="text/x-handlebars">
+		<h2>Ember Project</h2>
+
+		{{outlet}}
+	</script>
+
+	<script type="text/x-handlebars" id="index">
+		{{#link-to 'members'}}Search Records{{/link-to}}
+	</script>
+
+	<script type="text/x-handlebars" id="members">
+		{{dropdown-list item="default" options=categories valueKey='id' labelKey='city'}}
+	 
+		<br>
+		<div class="row">
+		{{#each item in model}}
+			<div class="col-xs-6 col-md-4">{{#link-to 'member' item}}{{item.firstname}}{{/link-to}}</div>
+		{{/each}}
+		</div>
+	</script>
+
+	<script type="text/x-handlebars" id="member">
+		{{#with model}}
+		<address>
+			<strong>First Name: {{firstname}}</strong><br>
+			Last Name: {{lastname}}<br>
+			City: {{city}}<br>
+			State: {{state}}<br>
+			Phone: {{phonenumber}}<br>
+		</address>
+		{{/with}}
+	</script>
+
+	<script type="text/x-handlebars" id="components/dropdown-list">
+		<button type="button" {{bind-attr class=":btn :dropdown-toggle btnClassName"}} {{action "toggle"}}> {{selectedOption.city}} <span class="caret"></span> </button>
+		{{#if isDropdownVisible}}
+		<ul class="dropdown-menu" style="display:block;">
+			{{#each	options}}
+			<li>{{#link-to 'city' city}}{{city}}{{/link-to}}</li>
+			{{/each}}
+		</ul>
+		{{/if}}
+	</script>
+	
+
+	<script src="public/js/libs/jquery-1.10.2.js"></script>
+	<script src="public/js/libs/handlebars-1.1.2.js"></script>
+	<script src="public/js/libs/ember-1.6.1.js"></script>
+	<script src="public/js/libs/ember-data-1.0.0-beta.3.js"></script>
+	<script src="public/js/libs/localstorage_adapter.js"></script>
+	<script src="public/js/app.js"></script>
+	<script src="controllers/members.js"></script>
+	<script src="models/member.js"></script>
+	<script src="routes/member.js"></script>
+	<script src="routes/members.js"></script>
+	<script src="routes/city.js"></script>
+	<!-- to activate the test runner, add the "?test" query string parameter -->
+	<!-- <script src="tests/runner.js"></script> -->
+</body>
+</html>
